@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   logicalFilePath="db/scripts.xml"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    
+    <changeSet id="Create Patient Table" author="Sara.Mohamed">
+        <sql>
+            CREATE TABLE MEDICAL.PATIENT
+            (
+            ID NUMBER NOT NULL,
+            NAME VARCHAR2(255 BYTE),
+            CONSTRAINT PATIENT_PK PRIMARY KEY (ID) ENABLE
+            );
+        </sql>
+    </changeSet>
+    
+    <changeSet id="Create Appointment Table" author="Sara.Mohamed">
+        <sql>
+            CREATE TABLE MEDICAL.APPOINTMENT
+            (
+            ID NUMBER NOT NULL,
+            APPOINTMENT_DATE DATE,
+            CANCELLATION_REASON VARCHAR2(255 BYTE),
+            PATIENT_ID NUMBER,
+            CONSTRAINT APPOINTMENT_PK PRIMARY KEY (ID) ENABLE,
+            CONSTRAINT APPOINTMENT_ID_FK FOREIGN KEY (PATIENT_ID)
+            REFERENCES MEDICAL.PATIENT ("ID") ENABLE
+            );
+        </sql>
+    </changeSet>
+    <changeSet id="create Appointment table Sequence" author="Sara.Mohamed">
+        <sql>
+            CREATE SEQUENCE MEDICAL.APPOINTMENT_SEQ
+            MINVALUE 1
+            MAXVALUE 999999999999999999999999999
+            START WITH 1
+            INCREMENT BY 50
+            ORDER
+            NOCYCLE;
+        </sql>
+    </changeSet>
+    
+</databaseChangeLog>
